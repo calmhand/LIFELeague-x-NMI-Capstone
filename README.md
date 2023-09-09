@@ -34,9 +34,11 @@ Pre-requisites: homebrew, npm, nodejs, mysql
 2) `npm install`
 3) `npm run dev`
 
-#### **Backend**
+#### **Backend :: ExpressJS**
 
-ExpressJS: `TBD`
+1) `cd backend`
+2) `npm install`
+3) `node app.js`
 
 #### **Database**
 
