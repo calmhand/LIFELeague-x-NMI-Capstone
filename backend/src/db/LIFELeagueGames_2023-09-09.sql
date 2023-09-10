@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 8.1.0)
 # Database: LIFELeagueGames
-# Generation Time: 2023-09-09 18:48:50 +0000
+# Generation Time: 2023-09-10 00:17:10 +0000
 # ************************************************************
 
 
@@ -29,7 +29,8 @@ CREATE TABLE `Admin` (
   `adminID` int unsigned NOT NULL AUTO_INCREMENT,
   `username` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `password` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`adminID`)
+  PRIMARY KEY (`adminID`),
+  UNIQUE KEY `admin_username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
