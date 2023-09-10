@@ -2,6 +2,7 @@ const express = require("express")
 const app = module.exports = express()
 const bcrypt = require('bcrypt')
 const db = require('../db/connection')
+const auth = require('../middleware/auth')
 
 /**
  * Returns all Admins in DB
@@ -64,6 +65,7 @@ app.post('/login/admin', (req, res) => {
             // Compare password with stored hash in db.
             try {
                 if (await bcrypt.compare(req.body.password, admin.password)) {
+                    auth.authorizeUser(admin);
                     res.send("Admin login: Success.")
                 } else {
                     res.send("Admin login: Bad Password.")

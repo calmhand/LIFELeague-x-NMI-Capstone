@@ -8,7 +8,7 @@ const favicon = require('serve-favicon')
 
 const path = require('path')
 
-const auth = require("./src/routes/auth")
+const auth = require("./src/middleware/auth")
 const admin = require("./src/routes/admin")
 const player = require("./src/routes/player")
 
@@ -19,7 +19,7 @@ app.use(favicon('./src/public/images/favicon.ico'))
 app.use(express.static('src/public'))
 app.use(express.json())
 
-app.use(auth)
+// app.use(auth)
 app.use(admin)
 app.use(player)
 
