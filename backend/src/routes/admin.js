@@ -2,7 +2,8 @@ const express = require("express")
 const app = module.exports = express()
 const bcrypt = require('bcrypt')
 const db = require('../db/connection')
-const auth = require('../middleware/auth')
+const jwt = require("jsonwebtoken")
+
 
 /**
  * Returns all Admins in DB
@@ -45,7 +46,7 @@ app.post('/create/admin', async (req, res) => {
 })
 
 /**
- * Login procedure as Admin.
+ * Login procedure as Admin. Includes authentication.
  */
 app.post('/login/admin', (req, res) => {
     const findAdmin = `SELECT * FROM Admin WHERE username='${req.body.username}'`
@@ -65,8 +66,10 @@ app.post('/login/admin', (req, res) => {
             // Compare password with stored hash in db.
             try {
                 if (await bcrypt.compare(req.body.password, admin.password)) {
-                    auth.authorizeUser(admin);
-                    res.send("Admin login: Success.")
+                    // TODO: Scale payload to JSON to store more info.
+                    const accessToken =  jwt.sign(req.body.username, process.env.ACCESS_TOKEN_SECRET)
+                    res.json({accessToken: accessToken})
+                    // res.send("Admin login: Success.")
                 } else {
                     res.send("Admin login: Bad Password.")
                 }
@@ -77,3 +80,16 @@ app.post('/login/admin', (req, res) => {
         })
     })
 })
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+
+    if (token == null) return res.sendStatus(401)
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) { return res.sendStatus(403) } // "We see you have a token, but it is no longer valid."
+        req.user = user
+        next()
+    })
+}

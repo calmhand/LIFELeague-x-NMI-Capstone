@@ -6,7 +6,7 @@
 
         <div id="login-container">
             <NuxtLink id="login-btn" to="/">LOGIN</NuxtLink>
-            <NuxtLink id="login-btn" to="/">REGISTER</NuxtLink>
+            <NuxtLink id="login-btn" to="/signup">REGISTER</NuxtLink>
         </div>
     </div>
 </template>
@@ -38,6 +38,7 @@ export default {
 
     #login-btn {
         all: unset;
+        cursor: pointer;
         border: white 2px solid;
         color: white;
         margin: 10px 0;
