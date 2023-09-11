@@ -5,7 +5,7 @@
         </video>
 
         <div id="login-container">
-            <NuxtLink id="login-btn" to="/">LOGIN</NuxtLink>
+            <NuxtLink id="login-btn" to="/login">LOGIN</NuxtLink>
             <NuxtLink id="login-btn" to="/signup">REGISTER</NuxtLink>
         </div>
     </div>
