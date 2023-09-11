@@ -1,5 +1,11 @@
 const jwt = require('jsonwebtoken')
 
+/**
+ * Player authentication with JWT middleware.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 exports.authenticatePlayer = (req, res, next) => {
     const token = req.cookies.player_token
 
@@ -13,11 +19,17 @@ exports.authenticatePlayer = (req, res, next) => {
     }
 }
 
+/**
+ * Administrative authentication with JWT middleware.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 exports.authenticateAdmin = (req, res, next) => {
     const token = req.cookies.admin_token
 
     try {
-        const admin = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+        const admin = jwt.verify(token, process.env.ADMIN_TOKEN_SECRET)
         req.user = admin
         next()
     } catch (err) { // Token expired or is invalid.
