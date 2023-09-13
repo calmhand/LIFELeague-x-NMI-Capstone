@@ -57,8 +57,8 @@ module.exports.adminLogin_post = async (req, res) => {
 
             // Creates cookie and stores on local storage
             res.cookie("admin_token", accessToken, {
-                httpOnly: true,
-                secure: true
+                // httpOnly: true,
+                // secure: true
             })
 
             // TODO: return a payload with all necessary info of admin.

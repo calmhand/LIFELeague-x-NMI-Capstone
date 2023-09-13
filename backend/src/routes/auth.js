@@ -14,6 +14,7 @@ router.post('/login', authController.login_post)
 
 // Login/Registration Routes for 'Admin'.
 router.post('/admin-login', authController.adminLogin_post)
-router.post('/admin-signup', authenticateAdmin, authController.adminSignUp_post) // Only available to verified Admin.
+router.post('/admin-signup', authController.adminSignUp_post) // TODO: For testing only.
+// router.post('/admin-signup', authenticateAdmin, authController.adminSignUp_post) // Only available to verified Admin.
 
 module.exports = router

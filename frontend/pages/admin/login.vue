@@ -1,19 +1,20 @@
 <template>
     <div>
+        admin login
         <NuxtLink to="/">back to home</NuxtLink>
-        <form id="login-form" @submit.prevent="submitLoginForm">
+        <form id="admin-login-form" @submit.prevent="adminLogin">
             Username:
-            <input type="text" name="login_username" v-model="username">
+            <input type="text" name="admin-login-username" v-model="username">
 
             Password:
-            <input type="password" name="login_password" v-model="password">
+            <input type="password" name="admin_login-password" v-model="password">
             <button type="submit">login</button>
         </form>
     </div>
 </template>
 <script>
 export default {
-    name: "Player Login",
+    name: 'Admin Login',
     data() {
         return {
             username: "",
@@ -21,26 +22,24 @@ export default {
         }
     },
     methods: {
-        async submitLoginForm() {
-
+        async adminLogin() {
             const obj = {
                 "username": this.username,
                 "password": this.password
             }
 
-            await this.$api.post('/login', JSON.stringify(obj))
+            await this.$api.post('/admin-login', JSON.stringify(obj))
             .then((res) => {
                 console.log(res.data);
 
                 // Take information from res.data and fill into app state manager.
-                navigateTo('/home')
+                // Create cookie and save to local browser store
+                navigateTo('/admin')
             })
             .catch((e) => {
                 console.log(e);
             })
-        }
-    },
-    mounted() {
+        },
     }
 }
 </script>
