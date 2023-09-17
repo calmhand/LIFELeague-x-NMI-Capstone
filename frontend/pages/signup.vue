@@ -12,8 +12,14 @@
     </div>
 </template>
 <script>
+import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
+import { useAuthStore } from '@/stores/auth'; // import the auth store we just created
+
 export default {
     name: "Sign Up",
+    setup() {
+        
+    },
     data() {
         return {
             username: "",
@@ -25,12 +31,14 @@ export default {
 
             const obj = {
                 "username": this.username,
-                "password": this.password
+                "password": this.password,
+                "role": "PLAYER"
             }
 
             await this.$api.post('/signup', JSON.stringify(obj))
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
+                navigateTo("/login")
             })
             .catch((e) => {
                 console.log(e);

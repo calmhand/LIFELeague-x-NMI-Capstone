@@ -13,8 +13,17 @@
     </div>
 </template>
 <script>
+import { useUserStore } from '@/stores/userStore'
+
 export default {
     name: 'Admin Login',
+    setup() {
+        const userStore = useUserStore()
+
+        return {
+            userStore
+        }
+    },
     data() {
         return {
             username: "",
@@ -23,18 +32,17 @@ export default {
     },
     methods: {
         async adminLogin() {
-            const obj = {
+            const payload = {
                 "username": this.username,
                 "password": this.password
             }
-
-            await this.$api.post('/admin-login', JSON.stringify(obj))
+            
+            await this.$api.post('/admin-login', JSON.stringify(payload))
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
 
                 // Take information from res.data and fill into app state manager.
                 // Create cookie and save to local browser store
-                navigateTo('/admin')
             })
             .catch((e) => {
                 console.log(e);

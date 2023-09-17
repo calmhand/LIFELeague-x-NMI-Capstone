@@ -12,8 +12,26 @@
     </div>
 </template>
 <script>
+import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
+import { useAuthStore } from '@/stores/auth'; // import the auth store we just created
+
 export default {
     name: "Player Login",
+    setup() {
+        const { authenticateUser } = useAuthStore(); // use authenticateUser action from  auth store
+        const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
+        const login = async (payload) => {
+            await authenticateUser(payload); // call authenticateUser and pass the user object
+
+            // redirect to homepage if user is authenticated
+            if (authenticated.value) {
+                navigateTo('/home')
+            }
+        };
+        return {
+            login
+        }
+    },
     data() {
         return {
             username: "",
@@ -22,22 +40,13 @@ export default {
     },
     methods: {
         async submitLoginForm() {
-
             const obj = {
                 "username": this.username,
-                "password": this.password
+                "password": this.password,
             }
+                        
+            this.login(obj)
 
-            await this.$api.post('/login', JSON.stringify(obj))
-            .then((res) => {
-                console.log(res.data);
-
-                // Take information from res.data and fill into app state manager.
-                navigateTo('/home')
-            })
-            .catch((e) => {
-                console.log(e);
-            })
         }
     },
     mounted() {

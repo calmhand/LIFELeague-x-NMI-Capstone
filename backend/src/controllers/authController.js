@@ -39,40 +39,45 @@ module.exports.adminLogin_post = async (req, res) => {
         const admin = await prisma.admin.findFirst({
             where: {username: username}
         })
+        .catch((err) => {
+            throw (`Prisma Error\n ${err}`);
+        })
         
         if (admin === null) {
             throw "Bad username."
-        }
-
-        // TODO: Describe the payload to be sent to frontend upon login here.
-        const payload = {
-            username: admin.username,
-            adminID: admin.adminID,
-            // privilege level,
-        }
-
-        if (await bcrypt.compare(password, admin.password)) {
-            // Take user object and sign it with JWT.
-            const accessToken =  jwt.sign(payload, process.env.ADMIN_TOKEN_SECRET, { expiresIn: "1h" })
-
-            // Creates cookie and stores on local storage
-            res.cookie("admin_token", accessToken, {
-                // httpOnly: true,
-                // secure: true
-            })
-
-            // TODO: return a payload with all necessary info of admin.
-            res.json(payload)
         } else {
-            res.send("Admin login: Bad Password.")
+            // TODO: Describe the payload to be sent to frontend upon login here.
+            const payload = {
+                username: admin.username,
+                adminID: admin.adminID,
+                role: admin.role
+                // privilege level,
+            }
+
+            if (await bcrypt.compare(password, admin.password)) {
+                // Take user object and sign it with JWT.
+                const accessToken =  jwt.sign(payload, process.env.ADMIN_TOKEN_SECRET, { expiresIn: "1h" })
+
+                // Creates cookie and stores on local storage
+                res.cookie("admin_token", accessToken, {
+                     httpOnly: true,
+                    secure: true
+                })
+
+                // TODO: return a payload with all necessary info of admin.
+                res.json(payload)
+            } else {
+                res.send("Admin login: Bad Password.")
+            }
         }
+
     } catch (err) {
         res.send(err)
     }
 }
 
 module.exports.signUp_post = async (req, res, next) => {
-    const { username, password } = req.body
+    const { username, password, role } = req.body
     if (!username, !password) {
         res.status(400).send('Fields must not be blank upon submission.')
     } else {
@@ -81,7 +86,9 @@ module.exports.signUp_post = async (req, res, next) => {
             const newUser = await prisma.player.create({
                 data: {
                     username: username,
-                    password: hash
+                    password: hash,
+                    role: role
+                    // TODO: Update with any new fields for future tables
                 }
             })
             res.status(201).json(newUser)
@@ -104,13 +111,17 @@ module.exports.login_post = async (req, res) => {
         })
         
         if (user === null) {
-            throw "Bad username."
+            throw {
+                error: true,
+                message: "User not found."
+            }
         }
 
         // TODO: Describe the payload to be sent to frontend upon login here.
         const payload = {
             username: user.username,
             playerID: user.playerID,
+            role: user.role
             // stats,
             // currency,
             // progress
@@ -120,16 +131,21 @@ module.exports.login_post = async (req, res) => {
             // Take user object and sign it with JWT.
             const accessToken =  jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1h" })
 
-            // Creates cookie and stores on local storage
+            // Creates cookie and stores on local storage (of server)
             res.cookie("player_token", accessToken, {
                 httpOnly: true,
                 secure: true
             })
 
+            payload["token"] = accessToken
+            
             // TODO: return a payload with all necessary info of user.
             res.json(payload)
         } else {
-            res.send("Player login: Bad Password.")
+            throw {
+                error: true,
+                message: "Player login: Bad Password."
+            }
         }
     } catch (err) {
         res.send(err)
