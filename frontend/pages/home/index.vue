@@ -2,6 +2,9 @@
     <div>
         game home page :)
         Player sees this upon successful login
+        <video autoplay muted loop id="login-bg">
+            <source src="@/assets/videos/logo_bg.mp4" type="video/mp4" />
+        </video>
         <button @click.prevent="logout">logout</button>
     </div>
 </template>

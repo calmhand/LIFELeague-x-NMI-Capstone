@@ -26,7 +26,7 @@ export default {
             // redirect to homepage if user is authenticated
             if (authenticated.value) {
                 navigateTo('/home')
-            }
+            } 
         };
         return {
             login

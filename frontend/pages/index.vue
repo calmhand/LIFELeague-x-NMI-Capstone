@@ -3,11 +3,7 @@
         <video autoplay muted loop id="login-bg">
             <source src="../assets/videos/logo_bg.mp4" type="video/mp4" />
         </video>
-
-        <div id="login-container">
-            <NuxtLink id="login-btn" to="/login">LOGIN</NuxtLink>
-            <NuxtLink id="login-btn" to="/signup">REGISTER</NuxtLink>
-        </div>
+        <LoginRegistration/>
     </div>
 </template>
 

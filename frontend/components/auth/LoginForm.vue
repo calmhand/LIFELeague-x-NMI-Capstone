@@ -1,0 +1,137 @@
+<template>
+    <div id="login-form-container">
+        <form id="login-form" @submit.prevent="submitLoginForm">
+            <input type="text" name="login_username" v-model="username" placeholder="USERNAME" required>
+            <input type="password" name="login_password" v-model="password" placeholder="PASSWORD" required>
+            <button id="login-btn" type="submit">LOGIN</button>
+            <button id="close-btn" type="reset" @click="$emit('close-form')">CLOSE</button>
+        </form>
+    </div>
+</template>
+<script>
+import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
+import { useAuthStore } from '@/stores/auth'; // import the auth store we just created
+
+export default {
+    name: "Player Login",
+    setup() {
+        const { authenticateUser } = useAuthStore(); // use authenticateUser action from  auth store
+        const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
+        const login = async (payload) => {
+            await authenticateUser(payload); // call authenticateUser and pass the user object
+
+            // redirect to homepage if user is authenticated
+            if (authenticated.value) {
+                navigateTo('/home')
+            } 
+        };
+        return {
+            login
+        }
+    },
+    data() {
+        return {
+            username: "",
+            password: ""
+        }
+    },
+    methods: {
+        async submitLoginForm() {
+            const obj = {
+                "username": this.username,
+                "password": this.password,
+            }
+                        
+            this.login(obj)
+
+        }
+    },
+    mounted() {
+    }
+}
+</script>
+<style lang="scss" scoped>
+    #login-form-container {
+        font-family: "termina-regular";
+        color: white;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000000d4;
+        z-index: 999;
+    }
+
+    #login-form {
+        display: flex;
+        flex-direction: column;
+        width: 25%;
+    }
+
+    #login-btn, #close-btn {
+        font-family: "termina-bold";
+        font-size: 16px;
+        color: black;
+        border: none;
+        background-color: #ffffffaa;
+        width: 100%;
+        padding: 1rem 0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    #login-btn:hover, #close-btn:hover {
+        color: white;
+    }
+
+    #login-btn:hover {
+        background-color: #4cff70aa;
+    }
+
+    #close-btn:hover {
+        background-color: #ff4c4caa;
+    }
+
+    input {
+        width: 100%; 
+        margin-bottom: 10px; 
+        background: rgba(255, 255, 255, 0.3);
+        border: none;
+        outline: none;
+        padding: 10px;
+
+        font-size: 16px;
+        font-family: "termina-regular";
+
+        color: #fff;
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+        border: 1px solid rgba(0,0,0,0.3);
+        border-radius: 4px;
+        box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
+        -webkit-transition: box-shadow .5s ease;
+        -moz-transition: box-shadow .5s ease;
+        -o-transition: box-shadow .5s ease;
+        -ms-transition: box-shadow .5s ease;
+        transition: box-shadow .5s ease;
+    }
+
+    input::placeholder {
+        color: white;
+        font-family: "termina-regular";
+    }
+
+    input:focus { 
+        box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); 
+    }
+
+    .fade-enter-active,
+.fade-leave-active {
+    transition: opacity .5s
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0
+}
+</style>
