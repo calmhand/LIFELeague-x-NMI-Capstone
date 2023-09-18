@@ -1,6 +1,6 @@
 <template>
     <div id="test">
-        <video autoplay muted loop id="login-bg">
+        <video autoplay muted loop id="video-bg">
             <source src="../assets/videos/logo_bg.mp4" type="video/mp4" />
         </video>
         <LoginRegistration/>
@@ -13,16 +13,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-    #login-bg {
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-        position: fixed;
-        inset: 0 0 0 0;
-        z-index: -1;
-    }
-
+<style lang="scss" scoped>
     #login-container {
         display: flex;
         flex-direction: column;

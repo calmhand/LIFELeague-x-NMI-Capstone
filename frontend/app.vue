@@ -25,6 +25,15 @@
     min-height: 100vh;
   }
 
+  #video-bg {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      position: fixed;
+      inset: 0 0 0 0;
+      z-index: -1;
+  }
+
   /* Global Page Transitions */
 .page-enter-active,
 .page-leave-active {

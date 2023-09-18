@@ -33,6 +33,7 @@ export default {
 <style lang="scss" scoped>
     .login-bar-container {
         display: flex;
+        text-align: center;
         position: absolute;
         bottom: 0;
         left: 0;

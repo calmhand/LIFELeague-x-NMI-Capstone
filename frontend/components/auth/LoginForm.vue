@@ -47,6 +47,7 @@ export default {
         }
     },
     mounted() {
+
     }
 }
 </script>
@@ -59,7 +60,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #000000d4;
+        background: #00000067;
         z-index: 999;
     }
 
@@ -75,8 +76,10 @@ export default {
         color: black;
         border: none;
         background-color: #ffffffaa;
+        text-align: center;
         width: 100%;
         padding: 1rem 0;
+        margin: 0.5rem 0;
         cursor: pointer;
         transition: all 0.3s ease;
     }
