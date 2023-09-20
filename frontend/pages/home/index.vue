@@ -16,7 +16,7 @@ export default {
         const { logUserOut } = useAuthStore(); // use authenticateUser action from  auth store
         const logout = () => {
             logUserOut();
-            navigateTo('/');
+            return navigateTo('/');
         }
         return {
             logout
@@ -45,6 +45,7 @@ export default {
         }
     },
     mounted() {
+        // TODO: Site-wide check for auth status?
         if (useAuthStore().getUsername === "") {
             // this.logout()
         }

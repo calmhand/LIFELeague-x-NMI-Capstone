@@ -1,11 +1,12 @@
 <template>
     <div class="DefaultMenu">
-        <div v-if="role === `PLAYER`">
+        <div v-if="authStore.getRole === `PLAYER`">
             Layout only visible to user with role "PLAYER"
+            Welcome, {{ authStore.getUsername }}
         </div>
 
-        <div v-if="role === `ADMIN`">
-            Layout only visible to user with role "PLAYER"
+        <div v-if="authStore.getRole === `ADMIN`">
+            Layout only visible to user with role "ADMIN"
         </div>
         <div class="grid-container">
             <div class="img"><img src="@/assets/images/LIFELeague_Logo2.png" alt="LIFE League Logo2"/></div>
@@ -20,15 +21,30 @@
 </template>
 
 <script>
+import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
+import {useTestStore} from '@/stores/temp.auth'
+
 export default {
     setup() {
-        const role = useAuthStore().getRole
+        
+    },
+    data() {
         return {
-            role
+            authStore: useTestStore()
         }
     },
-    props: ["info"]
+    props: ["info"],
+    mounted() {
+        // const authStore = useTestStore()
+        let local = localStorage.getItem('auth')
+        
+        if (local) {
+            console.log(local);
+            this.authStore.auth = JSON.parse(local)
+            console.log(this.authStore.auth);
+        }
+    },
 }
 </script>
 
@@ -100,4 +116,15 @@ export default {
 
     .text4 { grid-area: text4; }
 
+      /* Global Page Transitions */
+.layout-enter-active,
+.layout-leave-active {
+  transition: all 0.5s;
+}
+
+.layout-enter-from,
+.layout-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+}
 </style>

@@ -10,20 +10,25 @@
 </template>
 <script>
 import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
-import { useAuthStore } from '@/stores/auth'; // import the auth store we just created
+import { useTestStore } from '@/stores/temp.auth'; // import the auth store we just created
+import { useAuthStore } from '~/stores/auth';
 
 export default {
     name: "Player Login",
     setup() {
-        const { authenticateUser } = useAuthStore(); // use authenticateUser action from  auth store
-        const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
+        const store = useTestStore()
+        // const { authenticateUser } = useTestStore(); // use authenticateUser action from  auth store
+        // const { authenticated } = storeToRefs(useTestStore()); // make authenticated state reactive with storeToRefs
         const login = async (payload) => {
-            await authenticateUser(payload); // call authenticateUser and pass the user object
-
+            // await authenticateUser(payload); // call authenticateUser and pass the user object
+            await store.authenticateUser(payload)
+            .then(() => {
+                console.log(store.getRole);
+                if (store.getRole) {
+                    navigateTo('/home')
+                } 
+            })
             // redirect to homepage if user is authenticated
-            if (authenticated.value) {
-                navigateTo('/home')
-            } 
         };
         return {
             login
@@ -43,7 +48,6 @@ export default {
             }
                         
             this.login(obj)
-
         }
     },
     mounted() {

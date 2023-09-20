@@ -14,6 +14,7 @@ let api = axios.create({
         },
     },
 });
+
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         role: "",
@@ -21,10 +22,11 @@ export const useAuthStore = defineStore('auth', {
         token: "",
         authenticated: false
     }),
+    persist: true,
     getters: {
         getUsername: (state) => state.username,
         getToken: (state) => state.token,
-        getRole: (state) => state.role
+        getRole: (state) => { return state.role }
     },
     actions: {
         async authenticateUser(payload) {
@@ -35,7 +37,10 @@ export const useAuthStore = defineStore('auth', {
                     const newToken = useCookie('auth-token')
                     newToken.value = res.data.token
                     this.authenticated = true
-                    
+                    useAuthStore().$subscribe((mutations, state) => {
+                        localStorage.setItem('auth', JSON.stringify(state))
+                    })
+                    console.log(res.data);
                     // Create setter function
                     this.setStateAttributes(res.data)
                 } else {
@@ -49,7 +54,7 @@ export const useAuthStore = defineStore('auth', {
         setStateAttributes(payload) {
             this.role = payload.role
             this.username = payload.username
-
+            this.token = payload.token
             if (payload.role === "PLAYER") {
                 // Call method from another store to handle call.
             } else if (payload.role === "ADMIN") {
@@ -63,6 +68,8 @@ export const useAuthStore = defineStore('auth', {
             this.username = ""
             this.token = ""
             this.authenticated = false
+            localStorage.removeItem('auth')
         }
-    }
+    },
+    
   })

@@ -21,7 +21,7 @@ export default {
     methods: {
         print(x) {
             console.log(x);
-            navigateTo(x);
+            return navigateTo(x);
         },
         showLogin(bool) {
             this.showLoginForm = bool

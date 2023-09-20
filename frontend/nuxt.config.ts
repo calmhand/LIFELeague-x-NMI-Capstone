@@ -5,7 +5,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
   plugins: [
-    '~/plugins/axios'
+    '~/plugins/axios',
+    '~/plugins/pinia'
   ],
   runtimeConfig: {
     public: {

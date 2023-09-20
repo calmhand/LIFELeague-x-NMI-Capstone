@@ -1,6 +1,6 @@
 <template>
     <nav class="nav-bar">
-        <button id="home-btn">PLAY</button>
+        <button @click="goTo('/home')" id="home-btn">PLAY</button>
         <button id="skills-btn">SKILLS</button>
         <button id="stats-btn">STATS</button>
         <button id="settings-btn" @click="toSettings">SETTINGS</button>
@@ -26,6 +26,9 @@ export default {
     methods: {
         toSettings() {
             navigateTo(`/account/player-${this.authStore.getUsername}`)
+        },
+        goTo(url) {
+            navigateTo(url)
         },
         setupBg() {
             // document.getElementById("video-bg").style.display = "none"

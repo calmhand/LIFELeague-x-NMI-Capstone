@@ -37,13 +37,14 @@
   /* Global Page Transitions */
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.5s;
+  transition: all 0.5s ease;
 }
 
 .page-enter-from,
 .page-leave-to {
-  opacity: 0;
+  /* opacity: 0; */
   filter: blur(1rem);
+  /* background-color: black; */
 }
 
 </style>
