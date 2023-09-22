@@ -1,31 +1,35 @@
 <template>
     <nav class="nav-bar">
-        <button @click="goTo('/home')" id="home-btn">PLAY</button>
-        <button id="skills-btn">SKILLS</button>
-        <button id="stats-btn">STATS</button>
-        <button id="settings-btn" @click="toSettings">SETTINGS</button>
-        <button id="logout-btn" @click="logout"><img src="@/assets/images/logoutIcon.png" alt="Logout"/></button>
+        <button class="nav-link" @click="goTo('/home')" id="home-btn">PLAY</button>
+        <button class="nav-link" @click="goTo(`/${store.getUsername}/skills`)" id="skills-btn">SKILLS</button>
+        <button class="nav-link" @click="goTo(`/${store.getUsername}/stats`)"  id="stats-btn">STATS</button>
+        <button class="nav-link" @click="goTo(`/account/player-${store.getUsername}`)"  id="settings-btn">SETTINGS</button>
+        <button class="nav-link" id="logout-btn" @click="logout"><img src="@/assets/images/logoutIcon.png" alt="Logout"/></button>
     </nav>
 </template>
 <script>
-import { useAuthStore } from '@/stores/auth'; // import the auth store we just created
+// import { useAuthStore } from '@/stores/auth'; // import the auth store we just created
+import { useTestStore } from '@/stores/temp.auth'; // import the auth store we just created
 
 export default {
     setup() {
-        const { logUserOut } = useAuthStore(); // use authenticateUser action from  auth store
-        const authStore = useAuthStore()
+        const { logUserOut } = useTestStore(); // use authenticateUser action from  auth store
         const logout = () => {
             logUserOut();
             navigateTo('/');
         }
         return {
             logout,
-            authStore
+        }
+    },
+    data() {
+        return {
+            store: useTestStore()
         }
     },
     methods: {
         toSettings() {
-            navigateTo(`/account/player-${this.authStore.getUsername}`)
+            return navigateTo(`/account/player-${this.authStore.getUsername}`, {external: true})
         },
         goTo(url) {
             navigateTo(url)
@@ -75,7 +79,7 @@ export default {
         width: 25px;
     }
 
-    button {
+    .nav-link {
         all: unset;
         font-family: "termina-bold";
         font-size: 0.9rem;
@@ -87,7 +91,7 @@ export default {
         transition: all 0.3s ease;
     }
 
-    button:hover {
+    .nav-link:hover {
         color: black;
         background-color: #ffffffac;
         -webkit-box-shadow: 0px 0px 14px 6px rgba(255,255,255,0.62);
@@ -95,14 +99,14 @@ export default {
         box-shadow: 0px 0px 14px 6px rgba(255,255,255,0.62);
     }
 
-    button:nth-child(1), 
-    button:nth-child(2), 
-    button:nth-child(3), 
-    button:nth-child(4) {
+    .nav-link:nth-child(1), 
+    .nav-link:nth-child(2), 
+    .nav-link:nth-child(3), 
+    .nav-link:nth-child(4) {
         border-right: #ffffff75 solid 1px;
     }
 
-    button:nth-child(5):hover {
+    .nav-link:nth-child(5):hover {
         background-color: #ff0000cc;
     }
 

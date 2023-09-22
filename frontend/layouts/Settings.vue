@@ -1,18 +1,12 @@
 <template>
     <div class="SettingsLayout">
-        <div v-if="role === `PLAYER`">
-            Layout only visible to user with role "PLAYER"
-        </div>
-
-        <div v-if="role === `ADMIN`">
-            Layout only visible to user with role "ADMIN"
-        </div>
         <div>
             <h1 id="account-header">Account Info</h1>
             <div id="account-content-container">
                 <span class="acc-content">ACCOUNT ID: </span>
-                <span class="acc-content">USERNAME: </span>
+                <span class="acc-content">USERNAME: {{ authStore.getUsername }}</span>
                 <span class="acc-content">EMAIL: </span>
+                <span class="acc-content">ROLE: {{ authStore.getRole }}</span>
             </div>
         </div>
         <slot/>
@@ -21,12 +15,18 @@
 </template>
 <script>
 import { useAuthStore } from '@/stores/auth'
+import { useTestStore } from '@/stores/temp.auth'
 
 export default {
     setup() {
         const role = useAuthStore().getRole
         return {
             role
+        }
+    },
+    data() {
+        return {
+            authStore: useTestStore()
         }
     },
     props: ["info"]

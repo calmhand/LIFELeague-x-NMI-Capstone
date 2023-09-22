@@ -1,15 +1,20 @@
 <template>
     <div class="DefaultMenu">
-        <div v-if="authStore.getRole === `PLAYER`">
-            Layout only visible to user with role "PLAYER"
-            Welcome, {{ authStore.getUsername }}
-        </div>
-
         <div v-if="authStore.getRole === `ADMIN`">
             Layout only visible to user with role "ADMIN"
         </div>
-        <div class="grid-container">
-            <div class="img"><img src="@/assets/images/LIFELeague_Logo2.png" alt="LIFE League Logo2"/></div>
+        
+        <div class="grid-container" v-if="authStore.getRole === `PLAYER`">
+            <div v-if="$route.path === '/home'" class="main-grid-content" id="main-menu-header">
+                WELCOME, {{ authStore.getUsername }}
+            </div>
+            <div v-if="$route.path === `/${authStore.getUsername}/skills`" class="main-grid-content" id="main-menu-header">
+                SKILLS
+            </div>
+            <div v-if="$route.path === `/${authStore.getUsername}/stats`" class="main-grid-content" id="main-menu-header">
+                STATS
+            </div>
+            <NuxtLink to="https://www.thelifeleague.info/home" target="_blank" class="img main-grid-content"><img src="@/assets/images/LIFELeague_Logo2.png" alt="LIFE League Logo2"/></NuxtLink>
             <NuxtLink class="text1 main-grid-content" :to="info[0].link">{{ info[0].content }}</NuxtLink>
             <NuxtLink class="text2 main-grid-content" :to="info[1].link">{{ info[1].content }}</NuxtLink>
             <NuxtLink class="text3 main-grid-content" :to="info[2].link">{{ info[2].content }}</NuxtLink>
@@ -55,17 +60,30 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        font-family: "termina-regular";
+    }
+
+    #main-menu-header {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        background-color: #000000bb;
+        color: white;
+        padding: 5px 10px;
+        font-size: 32px;
+        grid-area: main-menu-header;
     }
 
     .grid-container {
         font-family: "termina-bold";
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 0.5fr 1fr 1fr;
         grid-auto-columns: 1fr;
         gap: 5px 5px;
         grid-auto-flow: row;
         grid-template-areas:
+        "main-menu-header main-menu-header main-menu-header"
         "img text1 text3"
         "img text2 text4";
         text-align: center;
