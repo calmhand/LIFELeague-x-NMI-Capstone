@@ -41,13 +41,12 @@ export default {
     },
     props: ["info"],
     mounted() {
-        // const authStore = useTestStore()
-        let local = localStorage.getItem('auth')
+        const local = localStorage.getItem('auth')
         
+        // if cookie exists
         if (local) {
-            console.log(local);
+            // console.log(local);
             this.authStore.auth = JSON.parse(local)
-            console.log(this.authStore.auth);
         }
     },
 }

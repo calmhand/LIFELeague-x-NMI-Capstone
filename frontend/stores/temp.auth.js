@@ -21,9 +21,19 @@ export const useTestStore = defineStore('test', () => {
     const auth = ref({
         username: "",
         role: "",
+        token: "",
         authenticated: false,
-        token: ""
     })
+
+    // const auth_temp = ref({
+    //     "username": "",
+    //     "userID": "",
+    //     "email": "",
+    //     "role": "",
+    //     "token": "",
+    //     "authenticated": false,
+    //     "status": false
+    // })
 
     const getUsername = computed(() => auth.value.username)
     const getRole = computed(() => auth.value.role)
@@ -34,11 +44,8 @@ export const useTestStore = defineStore('test', () => {
         await api.post('/login', JSON.stringify(payload))
         .then((res) => {
             if (!res.data.error) {
-                const newToken = useCookie('auth-token')
-                newToken.value = res.data.token
-
                 this.setStateAttributes(res.data)
-
+                
                 useTestStore().$subscribe((mutations, state) => {
                     localStorage.setItem('auth', JSON.stringify(state.auth))
                 })
@@ -54,6 +61,9 @@ export const useTestStore = defineStore('test', () => {
     }
 
     function setStateAttributes(payload) {
+        const authToken = useCookie('auth-token')
+        const progressToken = ""
+        authToken.value = payload.token
         auth.value.role = payload.role
         auth.value.username = payload.username
         auth.value.token = payload.token
