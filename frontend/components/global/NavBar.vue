@@ -1,6 +1,6 @@
 <template>
     <nav class="nav-bar">
-        <button class="nav-link" @click="goTo('/home')" id="home-btn">PLAY</button>
+        <button class="nav-link" @click="goTo('/home')" id="home-btn">HOME</button>
         <button class="nav-link" @click="goTo(`/${store.getUsername}/skills`)" id="skills-btn">SKILLS</button>
         <button class="nav-link" @click="goTo(`/${store.getUsername}/stats`)"  id="stats-btn">STATS</button>
         <button class="nav-link" @click="goTo(`/account/player-${store.getUsername}`)"  id="settings-btn">SETTINGS</button>

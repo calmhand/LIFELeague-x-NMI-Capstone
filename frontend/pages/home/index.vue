@@ -26,6 +26,10 @@ export default {
         return {
             layoutContent: [
                 {
+                    content: 'PLAY',
+                    link: '/home'
+                },
+                {
                     content: 'ABOUT LIFE LEAGUE', 
                     link: '/home'
                 },
@@ -35,10 +39,6 @@ export default {
                 },
                 {
                     content: 'OUR NMI TEAM',
-                    link: '/home'
-                },
-                {
-                    content: 'SOURCE CODE',
                     link: '/home'
                 },
             ]
