@@ -1,7 +1,6 @@
 <template>
     <div id="player-settings-container">
         <NuxtLayout name="settings" :info="layoutContent">
-            Player {{ $route.params.username }} Account
         </NuxtLayout>
     </div>
 </template>
