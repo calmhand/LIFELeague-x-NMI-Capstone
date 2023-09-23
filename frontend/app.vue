@@ -1,10 +1,10 @@
 <template>
   <div id="app-container">
-    <NuxtPage page-key="static" />
+    <NuxtPage />
   </div>
 </template>
 
-<style>
+<style lang="scss">
   @font-face {
     font-family: "termina-regular";
     src: url("./assets/fonts/Termina/TerminaTest-Regular.otf");
@@ -42,9 +42,8 @@
 
 .page-enter-from,
 .page-leave-to {
-  opacity: 0;
-  filter: blur(1rem);
-  /* background-color: black; */
+  filter: blur(5rem);
+  transform: scale(1.1, 1.1);
 }
 
 </style>

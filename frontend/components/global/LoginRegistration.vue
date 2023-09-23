@@ -44,15 +44,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
     .login-bar-container {
         display: flex;
         text-align: center;
@@ -85,5 +76,15 @@ export default {
 
     button:nth-child(1) {
         border-right: #ffffff75 solid 1px;
+    }
+
+    .v-enter-active,
+    .v-leave-active {
+    transition: opacity 0.5s ease;
+    }
+
+    .v-enter-from,
+    .v-leave-to {
+    opacity: 0;
     }
 </style>
