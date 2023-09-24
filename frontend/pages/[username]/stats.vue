@@ -1,8 +1,6 @@
 <template>
     <div id="stats-container">
         <NuxtLayout name="main-menu" :info="layoutContent">
-            Stats!
-            Only accessible to a user with the role "Player"
         </NuxtLayout>
     </div>
 </template>

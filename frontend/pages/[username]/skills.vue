@@ -1,8 +1,6 @@
 <template>
     <div id="skills-container">
         <NuxtLayout name="main-menu" :info="layoutContent">
-            Skills!
-            Only accessible to a user with the role "Player"
         </NuxtLayout>
     </div>
 </template>
