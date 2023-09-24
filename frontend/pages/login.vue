@@ -1,58 +1,38 @@
 <template>
-    <div>
-        <NuxtLink to="/">back to home</NuxtLink>
-        <form id="login-form" @submit.prevent="submitLoginForm">
-            Username:
-            <input type="text" name="login_username" v-model="username">
-
-            Password:
-            <input type="password" name="login_password" v-model="password">
-            <button type="submit">login</button>
-        </form>
+    <div id="test">
+        <video autoplay muted loop id="video-bg">
+            <source src="../assets/videos/logo_bg.mp4" type="video/mp4" />
+        </video>
+        <LoginRegistration/>
     </div>
 </template>
+
 <script>
-import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
-import { useAuthStore } from '@/stores/auth'; // import the auth store we just created
-
 export default {
-    name: "Player Login",
-    setup() {
-        const { authenticateUser } = useAuthStore(); // use authenticateUser action from  auth store
-        const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
-        const login = async (payload) => {
-            await authenticateUser(payload); // call authenticateUser and pass the user object
-
-            // redirect to homepage if user is authenticated
-            if (authenticated.value) {
-                navigateTo('/home')
-            } 
-        };
-        return {
-            login
-        }
-    },
-    data() {
-        return {
-            username: "",
-            password: ""
-        }
-    },
-    methods: {
-        async submitLoginForm() {
-            const obj = {
-                "username": this.username,
-                "password": this.password,
-            }
-                        
-            this.login(obj)
-
-        }
-    },
-    mounted() {
-    }
+    
 }
 </script>
-<style lang="">
-    
+
+<style lang="scss" scoped>
+    #login-container {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 60%;
+        width: 100%;
+        align-items: center;
+    }
+
+    #login-btn {
+        all: unset;
+        cursor: pointer;
+        border: white 2px solid;
+        color: white;
+        margin: 10px 0;
+        width: 25%;
+        padding: 20px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 900;
+    }
 </style>
