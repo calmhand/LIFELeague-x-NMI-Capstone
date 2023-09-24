@@ -9,20 +9,18 @@ datasource db {
 
 model AccessKeys {
   keyId       Int     @id @default(autoincrement()) @db.UnsignedInt
-  accessKeys  String  @db.Char(6)
+  accessKey   String  @db.Char(6)
   description String? @db.Text
 }
 
 model AccountStatus {
-  statusId Int       @id @default(autoincrement()) @db.UnsignedInt
-  status   String    @db.Char(255)
-  Players  Players[]
+  statusId Int    @id @default(autoincrement()) @db.UnsignedInt
+  status   String @db.Char(255)
 }
 
 model AccountType {
-  accountTypeId Int       @id @default(autoincrement()) @db.UnsignedInt
-  accountType   String    @db.Char(255)
-  Players       Players[]
+  accountTypeId Int    @id @default(autoincrement()) @db.UnsignedInt
+  accountType   String @db.Char(255)
 }
 
 model Admins {
@@ -33,32 +31,24 @@ model Admins {
 }
 
 model Players {
-  playerId                      Int           @id @default(autoincrement()) @db.UnsignedInt
-  username                      String        @unique(map: "player_username") @db.Char(16)
-  first_name                    String        @db.VarChar(50)
-  last_name                     String        @db.VarChar(50)
-  password                      String        @db.Char(255)
-  email                         String        @db.Char(255)
-  saveData                      Int           @db.UnsignedInt
-  statusId                      Int           @db.UnsignedInt
-  accountTypeId                 Int           @db.UnsignedInt
-  AccountStatus                 AccountStatus @relation(fields: [statusId], references: [statusId], onDelete: NoAction, onUpdate: NoAction, map: "accountStatus")
-  AccountType                   AccountType   @relation(fields: [accountTypeId], references: [accountTypeId], onDelete: NoAction, onUpdate: NoAction, map: "accountType")
-  Saves_Players_saveDataToSaves Saves         @relation("Players_saveDataToSaves", fields: [saveData], references: [saveId], onDelete: NoAction, onUpdate: NoAction, map: "saveData")
-  Saves_Saves_playerIdToPlayers Saves[]       @relation("Saves_playerIdToPlayers")
-
-  @@index([statusId], map: "accountStatus")
-  @@index([accountTypeId], map: "accountType")
-  @@index([saveData], map: "saveData")
+  playerId                      Int     @id @default(autoincrement()) @db.UnsignedInt
+  username                      String  @unique(map: "unique_username") @db.Char(16)
+  first_name                    String  @db.VarChar(50)
+  last_name                     String  @db.VarChar(50)
+  password                      String  @db.Char(255)
+  email                         String  @unique(map: "unique_email") @db.Char(255)
+  saveData                      Int?    @db.UnsignedInt
+  statusId                      Int     @db.UnsignedInt
+  accountTypeId                 Int     @db.UnsignedInt
+  Saves_Saves_playerIdToPlayers Saves[] @relation("Saves_playerIdToPlayers")
 }
 
 model Saves {
-  saveId                          Int       @id @default(autoincrement()) @db.UnsignedInt
+  saveId                          Int     @id @default(autoincrement()) @db.UnsignedInt
   gameData                        Json?
   playerData                      Json?
-  playerId                        Int       @db.UnsignedInt
-  Players_Players_saveDataToSaves Players[] @relation("Players_saveDataToSaves")
-  Players_Saves_playerIdToPlayers Players   @relation("Saves_playerIdToPlayers", fields: [playerId], references: [playerId], onDelete: NoAction, onUpdate: NoAction, map: "playerId")
+  playerId                        Int     @db.UnsignedInt
+  Players_Saves_playerIdToPlayers Players @relation("Saves_playerIdToPlayers", fields: [playerId], references: [playerId], onDelete: NoAction, onUpdate: NoAction, map: "playerId")
 
   @@index([playerId], map: "playerId")
 }

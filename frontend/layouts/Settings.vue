@@ -3,11 +3,11 @@
         <div id="account-info-container">
             <h1 class="section-header">ACCOUNT INFO</h1>
             <section class="section-content-container">
-                <span class="acc-content">ACCOUNT ID: </span>
+                <span class="acc-content">ACCOUNT ID: {{ authStore.getId }}</span>
                 <span class="acc-content">USERNAME: {{ authStore.getUsername }}</span>
-                <span class="acc-content">EMAIL: </span>
+                <span class="acc-content">EMAIL: {{ authStore.getEmail }}</span>
                 <span class="acc-content">ROLE: {{ authStore.getRole }}</span>
-                <span class="acc-content">ACCOUNT STATUS: {{  }}</span>
+                <span class="acc-content">ACCOUNT STATUS: {{ authStore.getAuth }}</span>
             </section>
         </div>
         <div id="reset-info-container">
@@ -44,7 +44,10 @@ export default {
             authNewPassword: ""
         }
     },
-    props: ["info"]
+    props: ["info"],
+    mounted() {
+        useTestStore().hydrateState()
+    }
 }
 </script>
 <style lang="scss" scoped>

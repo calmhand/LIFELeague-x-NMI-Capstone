@@ -10,7 +10,7 @@
 
 <script>
 import { useAuthStore } from '@/stores/auth'; // import the auth store we just created
-
+import {useTestStore} from '@/stores/temp.auth'
 export default {
     setup() {
         const { logUserOut } = useAuthStore(); // use authenticateUser action from  auth store
@@ -18,6 +18,7 @@ export default {
             logUserOut();
             return navigateTo('/');
         }
+
         return {
             logout
         }
@@ -46,12 +47,17 @@ export default {
     },
     mounted() {
         // TODO: Site-wide check for auth status?
-        if (useAuthStore().getUsername === "") {
-            // this.logout()
+        const authCookie = useCookie('auth-token')
+        if (!authCookie.value) {
+            alert("Please log in.")
+            this.logout()
+        } else {
+            // populate store from jwt
+            let {hydrateState} = useTestStore()
+            hydrateState()
         }
     }
-};
-
+}
 </script>
 
 <style lang="scss">

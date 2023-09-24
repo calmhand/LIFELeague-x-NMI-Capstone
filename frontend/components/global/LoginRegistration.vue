@@ -7,7 +7,7 @@
         </Transition>
         <Transition>
             <div v-if="showSignUpForm">
-                <SignUpForm @close-form="showSignUp(false)"/>
+                <SignUpForm @close-form="showSignUp(false)" @successfully-registered="alertSuccess()"/>
             </div>
         </Transition>
         
@@ -39,6 +39,9 @@ export default {
         showSignUp(bool) {
             this.showSignUpForm = bool
         },
+        alertSuccess() {
+            alert("Successfully registered. Please log in.")
+        }
     },
     components: { LoginForm, SignUpForm }
 }

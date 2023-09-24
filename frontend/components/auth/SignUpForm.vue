@@ -1,11 +1,11 @@
 <template>
     <div id="signup-form-container">
-        <form id="signup-form" @submit.prevent="submitLoginForm">
+        <form id="signup-form" @submit.prevent="submitSignUpForm">
             <button id="close-signup-btn" type="reset" @click="$emit('close-form')">X</button>
             <h1 style="text-align: left;">JOIN THE LEAGUE.</h1>
             <hr style="width: 100%; margin: 10px 0;">
             <div>
-                <input type="text" name="signup_username" v-model="username" placeholder="USERNAME" required maxlength="16">
+                <input type="text" name="signup_username" v-model="username" placeholder="USERNAME" required maxlength="16" autocomplete="off">
                 <input type="email" name="signup_email" v-model="email" placeholder="EMAIL" required>
             </div>
 
@@ -15,20 +15,51 @@
             </div>
 
             <div>
-                <input type="password" name="signup_password" v-model="password" placeholder="PASSWORD" required maxlength="16">
-                <input type="password" name="signup_authPassword" v-model="authPassword" placeholder="RE-TYPE PASSWORD" required maxlength="16">
+                <input type="password" name="signup_password" v-model="password" placeholder="PASSWORD" required maxlength="32">
+                <input type="password" name="signup_authPassword" v-model="authPassword" placeholder="RE-TYPE PASSWORD" required maxlength="32">
             </div>
 
             <div>
-                <input type="text" name="signup_accessKey" v-model="accessKey" placeholder="ACCESS KEY" required maxlength="6">
+                <input type="text" name="signup_accessKey" v-model="accessKey" placeholder="ACCESS KEY" required maxlength="6" autocomplete="off">
             </div>
             <div><button id="signup-btn" type="submit">REGISTER</button></div>
         </form>
     </div>
 </template>
 <script>
+import { useTestStore } from '@/stores/temp.auth'; // import the auth store we just created
+
 export default {
     name: "Player Registration",
+    setup() {
+        const store = useTestStore()
+        // const { authenticateUser } = useTestStore(); // use authenticateUser action from  auth store
+        // const { authenticated } = storeToRefs(useTestStore()); // make authenticated state reactive with storeToRefs
+        const signup = async (payload) => {
+            // await authenticateUser(payload); // call authenticateUser and pass the user object
+            return await store.createUser(payload)
+            .then(() => {
+                return true
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+                console.log(err);
+                return false
+            })
+            // redirect to homepage if user is authenticated
+        }
+        const login = async (payload) => {
+            await store.authenticateUser(payload)
+            .then(() => {
+                if (store.getRole) {
+                    navigateTo('/home')
+                } 
+            })
+        }
+        return {
+            signup, login
+        }
+    },
     data() {
         return {
             username: "",
@@ -37,8 +68,33 @@ export default {
             lastName: "",
             password: "",
             authPassword: "",
-            birthDate: "",
             accessKey: "",
+        }
+    },
+    methods: {
+        async submitSignUpForm() {
+            if (this.verifyPassword) {
+                const payload = {
+                    username: this.username,
+                    first_name: this.firstName,
+                    last_name: this.lastName,
+                    password: this.password,
+                    email: this.email,
+                    statusId: 1,
+                    accountTypeId: 1,
+                    accessKey: this.accessKey,
+                }
+                this.signup(payload)
+                this.$emit('successfully-registered')
+                this.$emit('close-form')
+                return navigateTo('/')
+            }
+        }
+    },
+    computed: {
+        // When both inputs are not empty, do the passwords match?
+        verifyPassword() {
+            return this.password === this.authPassword && ((this.password && this.authPassword) != "")
         }
     }
 }

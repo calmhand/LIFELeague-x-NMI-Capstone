@@ -19,20 +19,17 @@ import { useAuthStore } from '~/stores/auth';
 export default {
     name: "Player Login",
     setup() {
-        const store = useTestStore()
         // const { authenticateUser } = useTestStore(); // use authenticateUser action from  auth store
         // const { authenticated } = storeToRefs(useTestStore()); // make authenticated state reactive with storeToRefs
+        const store = useTestStore()
         const login = async (payload) => {
-            // await authenticateUser(payload); // call authenticateUser and pass the user object
             await store.authenticateUser(payload)
             .then(() => {
-                console.log(store.getRole);
                 if (store.getRole) {
                     navigateTo('/home')
                 } 
-            })
-            // redirect to homepage if user is authenticated
-        };
+            }).catch((err) => {console.log(err);})
+        }
         return {
             login
         }
@@ -54,7 +51,7 @@ export default {
         }
     },
     mounted() {
-
+        
     }
 }
 </script>

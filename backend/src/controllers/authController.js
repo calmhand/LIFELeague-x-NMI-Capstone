@@ -77,24 +77,32 @@ module.exports.adminLogin_post = async (req, res) => {
 }
 
 module.exports.signUp_post = async (req, res, next) => {
-    const { username, password, role } = req.body
-    if (!username, !password) {
+    const { username, first_name, last_name, password, email, statusId, accountTypeId, accessKey } = req.body
+    if (!req.body) {
         res.status(400).send('Fields must not be blank upon submission.')
     } else {
         const hash = await bcrypt.hash(password, 10)
         try {
-            const newUser = await prisma.player.create({
-                data: {
-                    username: username,
-                    password: hash,
-                    role: role
-                    // TODO: Update with any new fields for future tables
-                }
-            })
-            res.status(201).json(newUser)
+            if (await verifyAccessKey(accessKey)) {
+                const newUser = await prisma.players.create({
+                    data: {
+                        username: username,
+                        first_name: first_name,
+                        last_name: last_name,
+                        password: hash,
+                        email: email,
+                        statusId: statusId,
+                        accountTypeId: accountTypeId,
+                        // TODO: Update with any new fields for future tables
+                    }
+                })
+                res.status(201).json(newUser)
+            } else {
+                res.status(400).send("Err: Invalid access key.")
+            }
         } catch (err) {
             if (err.code === 'P2002') {
-                res.status(400).send("User already exists. Change your username.")
+                res.status(400).send("Err: User already exists. Change your username/email.")
             } else {
                 res.status(400).send(err)
             }
@@ -106,10 +114,10 @@ module.exports.login_post = async (req, res) => {
     const { username, password } = req.body
 
     try {
-        const user = await prisma.player.findFirst({
+        const user = await prisma.players.findFirst({
             where: {username: username}
         })
-        
+
         if (user === null) {
             throw {
                 error: true,
@@ -120,8 +128,12 @@ module.exports.login_post = async (req, res) => {
         // TODO: Describe the payload to be sent to frontend upon login here.
         const payload = {
             username: user.username,
-            playerID: user.playerID,
-            role: user.role
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            userId: user.playerId,
+            accountTypeId: user.accountTypeId,
+            statusId: user.statusId
             // stats,
             // currency,
             // progress
@@ -148,6 +160,20 @@ module.exports.login_post = async (req, res) => {
             }
         }
     } catch (err) {
-        res.send(err)
+        res.status(400).send(err)
+    }
+}
+
+async function verifyAccessKey(key) {
+    try {
+        const accessKey = await prisma.accessKeys.findFirst({
+            where: {accessKey: key}
+        })
+
+        return accessKey ? true : false
+
+    } catch(err) {
+        console.log(err);
+        return false
     }
 }

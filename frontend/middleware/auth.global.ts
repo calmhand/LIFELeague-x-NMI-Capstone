@@ -6,9 +6,10 @@ export default defineNuxtRouteMiddleware((to) => {
     const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive
     const token = useCookie('auth-token'); // get token from cookies
   
-    if (token.value) {
+    if (token.value && to.fullPath === '/') {
       // check if value exists
       authenticated.value = true; // update the state to authenticated
+      return navigateTo('/home')
     }
   
     // if token exists and url is /login redirect to homepage

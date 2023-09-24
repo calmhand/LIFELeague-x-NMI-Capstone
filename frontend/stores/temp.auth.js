@@ -20,6 +20,8 @@ export const useTestStore = defineStore('test', () => {
 
     const auth = ref({
         username: "",
+        email: "",
+        userId: null,
         role: "",
         token: "",
         authenticated: false,
@@ -36,6 +38,8 @@ export const useTestStore = defineStore('test', () => {
     // })
 
     const getUsername = computed(() => auth.value.username)
+    const getId = computed(() => auth.value.userId)
+    const getEmail = computed(() => auth.value.email)
     const getRole = computed(() => auth.value.role)
     const getAuth = computed(() => auth.value.authenticated)
     const getToken = computed(() => auth.value.token)
@@ -43,16 +47,14 @@ export const useTestStore = defineStore('test', () => {
     async function authenticateUser(payload) {
         await api.post('/login', JSON.stringify(payload))
         .then((res) => {
-            if (!res.data.error) {
+            try {
                 this.setStateAttributes(res.data)
-                
-                useTestStore().$subscribe((mutations, state) => {
-                    localStorage.setItem('auth', JSON.stringify(state.auth))
-                })
+
+                localStorage.setItem('auth', JSON.stringify(auth.value))
 
                 console.log(res.data);
-            } else {
-                throw res.data;
+            } catch(err) {
+                throw err
             }
         })
         .catch((e) => {
@@ -60,34 +62,60 @@ export const useTestStore = defineStore('test', () => {
         })
     }
 
+    async function createUser(payload) {
+        await api.post('/signup', JSON.stringify(payload))
+        .then((res) => {
+            if (!res.data.error) {
+                console.log(res.data);
+            } else {
+                throw res.data
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
     function setStateAttributes(payload) {
-        const authToken = useCookie('auth-token')
+        const authToken = useCookie('auth-token', {sameSite: "strict"})
+
         const progressToken = ""
+
         authToken.value = payload.token
-        auth.value.role = payload.role
+        auth.value.email = payload.email
         auth.value.username = payload.username
         auth.value.token = payload.token
         auth.value.authenticated = true
+        auth.value.userId = payload.userId
 
-        if (payload.role === "PLAYER") {
-            // Call method from another store to handle call.
-        } else if (payload.role === "ADMIN") {
-            // Call method from another store to handle call.
+        if ((payload.accountTypeId  === 1) || payload.role === "PLAYER") {
+            auth.value.role = "PLAYER"
         }
+
+    }
+
+    function hydrateState() {
+        const data = JSON.parse(localStorage.getItem('auth'))
+        console.log(data);
+        this.setStateAttributes(data)
     }
 
     function logUserOut() {
-        const savedToken = useCookie('auth-token'); // useCookie new hook in nuxt 3
+        const savedToken = useCookie('auth-token', {sameSite: 'strict'}); // useCookie new hook in nuxt 3
         savedToken.value = null; // clear the token cookie
+
         this.role = ""
         this.username = ""
         this.token = ""
+        this.email = ""
+        this.userId = null
         this.authenticated = false
         localStorage.removeItem('auth')
     }
+
     return { 
         auth,
-        getUsername, getRole, getToken, getAuth,
-        authenticateUser, setStateAttributes, logUserOut
+        getUsername, getRole, getToken, getAuth, getEmail, getId,
+        authenticateUser, createUser, setStateAttributes, hydrateState, logUserOut
     }
   }, { persist: true })
