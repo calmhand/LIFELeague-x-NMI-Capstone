@@ -12,6 +12,7 @@
 import { useTestStore } from '@/stores/temp.auth'; // import the auth store we just created
 import select_one from '@/assets/sounds/select.mp3'
 import select_two from '@/assets/sounds/select_2.mp3'
+
 export default {
     setup() {
         const { logUserOut } = useTestStore(); // use authenticateUser action from  auth store
@@ -45,34 +46,7 @@ export default {
             selectSoundOne.currentTime = 0
             selectSoundOne.play()
         },
-        setupBg() {
-            // document.getElementById("video-bg").style.display = "none"
-
-            let btn = document.getElementById("home-btn")
-            btn.onmouseover = function(){
-                document.getElementById("game-main-menu").style.backgroundColor = 'transparent'
-            };
-
-            btn = document.getElementById("skills-btn")
-            btn.onmouseover = function(){
-                document.getElementById("game-main-menu").style.backgroundColor = 'blue'
-            };
-
-            btn = document.getElementById("stats-btn")
-            btn.onmouseover = function(){
-                document.getElementById("game-main-menu").style.backgroundColor = 'yellow'
-            };
-
-            btn = document.getElementById("settings-btn")
-            btn.onmouseover = function(){
-                document.getElementById("game-main-menu").style.backgroundColor = 'green'
-            };
-        }
     },
-    mounted() {
-        // this.setupBg() //pain
-        // this.setUpSounds()
-    }
 }
 </script>
 <style lang="scss">

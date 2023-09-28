@@ -28,7 +28,7 @@ export default {
             layoutContent: [
                 {
                     content: 'PLAY',
-                    link: '/home'
+                    link: '/game'
                 },
                 {
                     content: 'ABOUT LIFE LEAGUE', 

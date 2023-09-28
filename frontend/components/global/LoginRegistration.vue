@@ -64,7 +64,7 @@ export default {
         border: none;
         background-color: #00000075;
         width: 100%;
-        padding: 2.5rem 0;
+        padding: 2rem 0;
         cursor: pointer;
         transition: all 0.3s ease;
     }

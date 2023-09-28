@@ -15,10 +15,10 @@
                 STATS
             </div>
             <NuxtLink to="https://www.thelifeleague.info/home" target="_blank" class="img main-grid-content"><img src="@/assets/images/LIFELeague_Logo2.png" alt="LIFE League Logo2"/></NuxtLink>
-            <NuxtLink class="text1 main-grid-content" :to="info[0].link">{{ info[0].content }}</NuxtLink>
-            <NuxtLink class="text2 main-grid-content" :to="info[1].link">{{ info[1].content }}</NuxtLink>
-            <NuxtLink class="text3 main-grid-content" :to="info[2].link">{{ info[2].content }}</NuxtLink>
-            <NuxtLink class="text4 main-grid-content" :to="info[3].link">{{ info[3].content }}</NuxtLink>
+            <NuxtLink @click="playClick()" @mouseover="playSound()" class="text1 main-grid-content" :to="info[0].link">{{ info[0].content }}</NuxtLink>
+            <NuxtLink @click="playClick()" @mouseover="playSound()" class="text2 main-grid-content" :to="info[1].link">{{ info[1].content }}</NuxtLink>
+            <NuxtLink @click="playClick()" @mouseover="playSound()" class="text3 main-grid-content" :to="info[2].link">{{ info[2].content }}</NuxtLink>
+            <NuxtLink @click="playClick()" @mouseover="playSound()" class="text4 main-grid-content" :to="info[3].link">{{ info[3].content }}</NuxtLink>
         </div>
         <slot />
         <NavBar/>
@@ -29,6 +29,8 @@
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 import {useTestStore} from '@/stores/temp.auth'
+import select_one from '@/assets/sounds/select.mp3'
+import select_two from '@/assets/sounds/select_2.mp3'
 
 export default {
     setup() {
@@ -38,6 +40,20 @@ export default {
         return {
             authStore: useTestStore()
         }
+    },
+    methods: {
+        playSound() {
+            const selectSoundOne = new Audio(select_one)
+            selectSoundOne.volume = 0.3
+            selectSoundOne.pause()
+            selectSoundOne.currentTime = 0
+            selectSoundOne.play()
+        },
+        playClick() {
+            const selectSoundTwo = new Audio(select_two)
+            selectSoundTwo.volume = 0.3
+            selectSoundTwo.play()
+        },
     },
     props: ["info"],
     mounted() {

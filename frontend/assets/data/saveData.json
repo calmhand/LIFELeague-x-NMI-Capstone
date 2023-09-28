@@ -1,0 +1,21 @@
+{
+  "saveId": null,
+  "playerData":{
+    "playerId": null,
+    "currency": null,
+    "rating": 60,
+    "skills": {
+      "offense": 0,
+      "defense": 0,
+      "leadership": 0,
+      "professionalism": 0
+    }
+  },
+  "gameData": {
+    "permissions": {
+      "stageOne": true,
+      "stageTwo": false,
+      "stageThree": false
+    }
+  }
+}

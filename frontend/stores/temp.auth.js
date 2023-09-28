@@ -96,7 +96,6 @@ export const useTestStore = defineStore('test', () => {
 
     function hydrateState() {
         const data = JSON.parse(localStorage.getItem('auth'))
-        console.log(data);
         this.setStateAttributes(data)
     }
 
