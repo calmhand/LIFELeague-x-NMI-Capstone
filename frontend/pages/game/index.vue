@@ -7,7 +7,7 @@
             </div>
         </div>
         <div id="stage-select">
-            <button id="stage-one-btn" @mouseover="setContent(stageOne)" class="stage-btn">STAGE ONE</button>
+            <button id="stage-one-btn" @mouseover="setContent(stageOne)" @click="navigateTo('/game/stage1')" class="stage-btn">STAGE ONE</button>
             <button id="stage-two-btn" v-if="stageTwo.available" @mouseover="setContent(stageTwo)" class="stage-btn">STAGE TWO</button>
             <button id="stage-three-btn" v-if="stageThree.available" @mouseover="setContent(stageThree)" class="stage-btn">STAGE THREE</button>
             <button id="stage-one-btn" v-if="!stageThree.available" class="stage-btn">LOCKED</button>
