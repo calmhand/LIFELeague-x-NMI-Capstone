@@ -1,32 +1,25 @@
-import { Game, AUTO, Scale, Scene } from "phaser";
-
-export class MainScene extends Scene {
-    constructor() {
-        super({ key: "MainScene" })
-    }
-
-    create() {
-        this.add.text(100, 100, "Hey", {
-            font: "24px Courier",
-            fill: "#ffffff"
-        })
-    }
-}
+import { Game, AUTO, Scale } from "phaser";
+import { scenes } from "./scenes";
 
 export function launch() {
     return new Game({
         type: AUTO,
         scale: {
-            mode: Scale.RESIZE,
-            width: window.innerWidth * window.devicePixelRatio,
-            height: window.innerHeight * window.devicePixelRatio,
-            autoCenter: Scale.CENTER_BOTH
+            // mode: Scale.RESIZE,
+            width: 1000,
+            height: 600,
+            // autoCenter: Scale.CENTER_BOTH
         },
         parent: "game",
         backgroundColor: "#000000",
         physics: {
             default: "arcade",
         },
-        scene: MainScene
+        scene: scenes,
+        render: {
+            pixelArt: true
+        }
     })
 }
+
+export function close() {}
