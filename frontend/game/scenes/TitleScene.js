@@ -12,9 +12,15 @@ export class TitleScene extends Scene {
         this.load.image("ball", "assets/MenuButtons/bball_select.png")
         this.load.image("play_btn", 'assets/MenuButtons/LargeButtons/Start.png')
         this.load.image("exit_btn", 'assets/MenuButtons/LargeButtons/Exit.png')
+
+        this.load.audio("hover_sound", "assets/text.mp3")
     }
 
     create() {
+        this.cameras.main.fadeIn(2000, 0, 0, 0)
+        setTimeout(() => {
+        }, 2000)
+
         const background = this.add.image(0, 0, "bg_img")
         background.setOrigin(0, 0)
 
@@ -27,9 +33,12 @@ export class TitleScene extends Scene {
         const playBtn = this.add.image(500, 400, "play_btn")
         playBtn.setScale(0.3)
 
+        const hoverSound = this.sound.add("hover_sound")
+
         playBtn.setInteractive()
         playBtn.on("pointerover", () => {
             ball.setVisible(true)
+            hoverSound.play()
             ball.setPosition(375, 400)
         })
         
@@ -38,7 +47,8 @@ export class TitleScene extends Scene {
         })
 
         playBtn.on("pointerup", () => {
-            console.log("start game");
+            this.scene.start("Act1_Level1")
+            // this.scene.start("Act1_Cutscene")
         })
 
         const exitBtn = this.add.image(500, 500, "exit_btn")
@@ -48,6 +58,7 @@ export class TitleScene extends Scene {
         exitBtn.on("pointerover", () => {
             ball.setVisible(true)
             ball.setPosition(375, 500)
+            hoverSound.play()
         })
         
         exitBtn.on("pointerout", () => {

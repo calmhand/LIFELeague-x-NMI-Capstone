@@ -40,7 +40,7 @@ export default {
                 },
                 {
                     content: 'OUR NMI TEAM',
-                    link: '/home'
+                    link: 'https://projects.nmi.cool/2023/nmc/lifeleague/'
                 },
             ]
         }
