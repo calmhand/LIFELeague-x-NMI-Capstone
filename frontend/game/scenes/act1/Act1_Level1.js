@@ -22,7 +22,7 @@ export class Act1_Level1 extends Scene {
         let crowd = this.sound.add("crowd_sound")
         crowd.setLoop(true)
         crowd.setVolume(0.5)
-        // crowd.play()
+        crowd.play()
 
         const hoverSound = this.sound.add("hover_sound")
 
