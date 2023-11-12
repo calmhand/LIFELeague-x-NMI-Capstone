@@ -11,19 +11,19 @@ export default {
             layoutContent: [
                 {
                     content: 'CAREER STATISTICS', 
-                    link: '/home'
+                    link: '/stats/career'
                 },
                 {
                     content: 'MESSAGES',
-                    link: '/'
+                    link: '/stats/messages'
                 },
                 {
                     content: 'SCOUTING REPORT',
-                    link: '/home'
+                    link: '/stats/scouting'
                 },
                 {
                     content: 'LESSONS',
-                    link: '/'
+                    link: '/stats/lessons'
                 },
             ]
         }

@@ -32,11 +32,11 @@ export default {
                 },
                 {
                     content: 'ABOUT LIFE LEAGUE', 
-                    link: '/home'
+                    link: 'https://www.thelifeleague.info/home'
                 },
                 {
                     content: 'HOW TO PLAY',
-                    link: '/home'
+                    link: '/home/guide'
                 },
                 {
                     content: 'OUR NMI TEAM',
