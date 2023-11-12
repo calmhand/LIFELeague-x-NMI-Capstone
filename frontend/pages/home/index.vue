@@ -35,7 +35,7 @@ export default {
                     link: 'https://www.thelifeleague.info/home'
                 },
                 {
-                    content: 'HOW TO PLAY',
+                    content: 'GUIDE',
                     link: '/home/guide'
                 },
                 {

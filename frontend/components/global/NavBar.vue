@@ -37,7 +37,7 @@ export default {
             const selectSoundTwo = new Audio(select_two)
             selectSoundTwo.volume = 0.3
             selectSoundTwo.play()
-            navigateTo(url)
+            return navigateTo(url)
         },
         playSound() {
             const selectSoundOne = new Audio(select_one)

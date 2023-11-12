@@ -11,19 +11,19 @@ export default {
             layoutContent: [
                 {
                     content: 'OFFENSE', 
-                    link: '/home'
+                    link: '/skills/offense'
                 },
                 {
                     content: 'LEADERSHIP',
-                    link: '/home'
+                    link: '/skills/leadership'
                 },
                 {
                     content: 'DEFENSE',
-                    link: '/home'
+                    link: '/skills/defense'
                 },
                 {
                     content: 'PROFESSIONALISM',
-                    link: '/home'
+                    link: '/skills/professionalism'
                 },
             ]
         }

@@ -12,6 +12,13 @@
         <p class="text">
             The game is primarily controlled with mouse input.
         </p>
+
+        <h1 class="section-header">DISCLAIMER</h1>
+        <p class="text">
+            The web app in its current state is a very early build. Some screens may not be functioning as intended.
+            This build is meant to be a semi-functioning prototype to present to individuals who wish to invest and sponsor
+            L.I.F.E League operations.
+        </p>
         <NavBar />
     </div>
 </template>
