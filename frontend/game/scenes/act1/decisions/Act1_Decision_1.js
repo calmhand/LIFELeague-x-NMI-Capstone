@@ -152,6 +152,8 @@ export class Act1_Decision_1_Good extends Scene {
         
         exitBtn.on("pointerup", () => {
             console.log("exit game");
+            this.game.destroy(true, false)
+            navigateTo("/game")
         })
         
         exitBtn.on("pointerout", () => {
@@ -215,6 +217,8 @@ export class Act1_Decision_1_Bad extends Scene {
         
         exitBtn.on("pointerup", () => {
             console.log("exit game");
+            this.game.destroy(true, false)
+            navigateTo("/game")
         })
         
         exitBtn.on("pointerout", () => {

@@ -67,6 +67,8 @@ export class TitleScene extends Scene {
         
         exitBtn.on("pointerup", () => {
             console.log("exit game");
+            this.game.destroy(true, false)
+            navigateTo("/game")
         })
     }
 }

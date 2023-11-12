@@ -4,6 +4,22 @@
   </div>
 </template>
 
+<script>
+export default {
+  setup() {
+    useHead({ 
+            title: "L.I.F.E League", 
+            meta: [
+                {
+                    name: "description", 
+                    content: "YOUR LIFE. YOUR LEAGUE."
+                }
+            ]
+        })
+  }
+}
+</script>
+
 <style lang="scss">
   @font-face {
     font-family: "termina-regular";
