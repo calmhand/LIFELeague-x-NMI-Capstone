@@ -14,7 +14,7 @@ This game aims to simulate the journey of an aspiring athlete, incorporating rea
 
 ## Tech Stack
 
-Frontend: NuxtJS; SCSS
+Frontend: Nuxt.js; Sass
 Backend: ExpressJS; NodeJS
 Database: mySQL
 
@@ -25,6 +25,8 @@ Database: mySQL
 ### MacOSX (bash)
 
 Pre-requisites: homebrew, npm, nodejs, mysql
+
+Please update the .env file to connect to your mySQL server.
 
 ...
 
@@ -48,4 +50,4 @@ mySQL: `brew services start mysql`
 
 ## Contacts
 
-Johnny Goulbourne - <jmg49760@uga.edu>
+Johnny Goulbourne - <johnny.goulb@gmail.com>

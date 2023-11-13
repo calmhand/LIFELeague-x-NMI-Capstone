@@ -1,3 +1,4 @@
+// Non-Prisma DB connection
 const mysql = require('mysql')
 const connection = mysql.createPool({
   host: process.env.DB_HOST,

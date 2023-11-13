@@ -76,6 +76,7 @@ module.exports.adminLogin_post = async (req, res) => {
     }
 }
 
+/** Player signup route */
 module.exports.signUp_post = async (req, res, next) => {
     const { username, first_name, last_name, password, email, statusId, accountTypeId, accessKey } = req.body
     if (!req.body) {
@@ -110,6 +111,7 @@ module.exports.signUp_post = async (req, res, next) => {
     }
 }
 
+/** Player login route */
 module.exports.login_post = async (req, res) => {
     const { username, password } = req.body
 

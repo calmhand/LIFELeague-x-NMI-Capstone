@@ -1,6 +1,7 @@
 import { Game, AUTO, Scale } from "phaser";
 import { scenes } from "./scenes";
 
+// Game properties
 export function launch() {
     return new Game({
         type: AUTO,
